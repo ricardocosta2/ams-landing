@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accommodation Management System — Progress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --card2: #182235;
+      --line: #243049;
+      --text: #e8eefc;
+      --muted: #93a0b8;
+      --green: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.12);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.12);
+      --blue: #38bdf8;
+      --purple: #a78bfa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.15), transparent 50%),
+        radial-gradient(900px 500px at 100% 0%, rgba(167, 139, 250, 0.12), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .badge span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    }
+
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 36px 0 48px;
+    }
+
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 32px;
+      margin-bottom: 4px;
+    }
+
+    .stat.done strong { color: var(--green); }
+    .stat.pending strong { color: var(--amber); }
+    .stat.next strong { color: var(--blue); }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      contents: "";
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: #334155;
+      transform: translateY(-1px);
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .icon.ok { background: var(--green-bg); }
+    .icon.wait { background: var(--amber-bg); color: var(--amber); }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 5px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .tag.done {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .tag.pending {
+      background: var(--amber-bg);
+      color: var(--amber);
+    }
+
+    .why {
+      grid-column: 2 / -1;
+      margin-top: 2px;
+      padding: 10px 12px;
+      background: var(--card2);
+      border-radius: 10px;
+      font-size: 13px;
+      color: #b6c2d9;
+      border-left: 3px solid var(--amber);
+    }
+
+    .why strong {
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 56px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge"><span></span> Live &amp; autonomous</div>
+      <h1>Accommodation Management System</h1>
+      <p class="subtitle">
+        Google Sheets database + Apps Script backend + Telegram bot + Booking.com iCal sync,
+        driven autonomously through a GitHub control channel.
+      </p>
+    </header>
+
+    <div class="stats">
+      <div class="stat done">
+        <strong>18</strong>
+        <span>Database tables</span>
+      </div>
+      <div class="stat done">
+        <strong>26</strong>
+        <span>Reservations synced</span>
+      </div>
+      <div class="stat next">
+        <strong>2h</strong>
+        <span>iCal sync interval</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-title">Done</div>
+      <div class="grid">
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>Spreadsheet database</h3>
+            <p>18 tables (Properties, Units, Listings, Reservations, Tasks, Inventory…) built by buildDatabase()</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>Apps Script backend</h3>
+            <p>HTTP Bridge + time-based triggers; full source deployed via clasp, no copy/paste</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>Telegram bot control</h3>
+            <p>Polls the group every minute; commands /ping /build /ical /status /install /remove /run /echo</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>Booking.com iCal sync</h3>
+            <p>13 feeds imported → 26 reservations, automatic every 2 hours</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>GitHub autonomous channel</h3>
+            <p>AI writes ams_commands.json, script executes, result read from ams_status.json</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">✅</div>
+          <div>
+            <h3>Local backups</h3>
+            <p>Timestamped snapshot of the project before every change, with restore script</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Planned — not built yet</div>
+      <div class="grid">
+        <div class="card">
+          <div class="icon wait">⏳</div>
+          <div>
+            <h3>Task generation</h3>
+            <p>Cleaning tasks auto-created from reservations (check-in / check-out)</p>
+            <div class="why"><strong>Next step:</strong> derive Tasks from the 26 synced reservations and the Property Tasks matrix.</div>
+          </div>
+          <span class="tag pending">Next</span>
+        </div>
+
+        <div class="card">
+          <div class="icon wait">⏳</div>
+          <div>
+            <h3>More listings</h3>
+            <p>Apartment 1/2 and Moerbeke listings (iCal links still pending)</p>
+            <div class="why"><strong>Why not yet:</strong> Waiting on the iCal URLs from the host for those properties.</div>
+          </div>
+          <span class="tag pending">Blocked</span>
+        </div>
+
+        <div class="card">
+          <div class="icon wait">⏳</div>
+          <div>
+            <h3>Q&amp;A / guest co-host bot</h3>
+            <p>Answer door codes, wifi, address from a Property Info sheet</p>
+            <div class="why"><strong>Future:</strong> Natural extension once internal ops are stable.</div>
+          </div>
+          <span class="tag pending">Future</span>
+        </div>
+
+        <div class="card">
+          <div class="icon wait">⏳</div>
+          <div>
+            <h3>Invoices</h3>
+            <p>Generate invoices/PDFs from cleaning or rental data</p>
+            <div class="why"><strong>Later:</strong> Scope still unclear (cleaning vs rental). Parked until defined.</div>
+          </div>
+          <span class="tag pending">Later</span>
+        </div>
+
+        <div class="card">
+          <div class="icon wait">⏳</div>
+          <div>
+            <h3>Live dashboard</h3>
+            <p>Web view of the database status, refreshed from the control channel</p>
+            <div class="why"><strong>Future:</strong> Could read ams_status.json once the repo is public.</div>
+          </div>
+          <span class="tag pending">Future</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p><strong>Status:</strong> Core MVP is live and self-running.</p>
+      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram + GitHub · August 2026</p>
+    </footer>
+  </div>
+</body>
+</html>
