@@ -259,7 +259,7 @@
         <span>Database tables</span>
       </div>
       <div class="stat done">
-        <strong>26</strong>
+        <strong>27</strong>
         <span>Reservations synced</span>
       </div>
       <div class="stat next">
@@ -293,7 +293,7 @@
           <div class="icon ok">✅</div>
           <div>
             <h3>Telegram bot control</h3>
-            <p>Polls the group every minute; commands /ping /build /ical /status /install /remove /run /echo</p>
+            <p>Polls the group every minute; commands /ping /build /ical /status /week /tasks /today /done /install /remove /run /echo</p>
           </div>
           <span class="tag done">Done</span>
         </div>
@@ -302,7 +302,7 @@
           <div class="icon ok">✅</div>
           <div>
             <h3>Booking.com iCal sync</h3>
-            <p>13 feeds imported → 26 reservations, automatic every 2 hours</p>
+            <p>13 feeds imported → 27 reservations, automatic every 2 hours</p>
           </div>
           <span class="tag done">Done</span>
         </div>
@@ -324,6 +324,33 @@
           </div>
           <span class="tag done">Done</span>
         </div>
+
+        <div class="card">
+          <div class="icon ok">📅</div>
+          <div>
+            <h3>Rolling Week View</h3>
+            <p>Week View sheet (Mon–Sun) auto-advances every Monday; rebuilt on each 2h iCal sync, today highlighted</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">🧹</div>
+          <div>
+            <h3>Task generation (Property Tasks matrix)</h3>
+            <p>229 cleaning tasks created from 27 reservations; each task type fires on check-in or check-out via the Trigger column</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">🔔</div>
+          <div>
+            <h3>Task operations loop</h3>
+            <p>Telegram /today agenda + /done completion, plus automatic daily push at 07:00 to the group</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
       </div>
     </section>
 
@@ -333,9 +360,9 @@
         <div class="card">
           <div class="icon wait">⏳</div>
           <div>
-            <h3>Task generation</h3>
-            <p>Cleaning tasks auto-created from reservations (check-in / check-out)</p>
-            <div class="why"><strong>Next step:</strong> derive Tasks from the 26 synced reservations and the Property Tasks matrix.</div>
+            <h3>Task assignment to workers</h3>
+            <p>Auto-assign generated tasks to Users (Assigned User column) and notify per worker</p>
+            <div class="why"><strong>Next step:</strong> populate Users and define assignment rules from the Property Tasks matrix.</div>
           </div>
           <span class="tag pending">Next</span>
         </div>
@@ -383,7 +410,7 @@
     </section>
 
     <footer>
-      <p><strong>Status:</strong> Core MVP is live and self-running.</p>
+      <p><strong>Status:</strong> Operational loop live — ingest → tasks → daily schedule.</p>
       <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram + GitHub · August 2026</p>
     </footer>
   </div>
