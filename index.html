@@ -263,8 +263,8 @@
         <span>Reservations synced</span>
       </div>
       <div class="stat next">
-        <strong>2h</strong>
-        <span>iCal sync interval</span>
+        <strong>137</strong>
+        <span>Days on live board</span>
       </div>
     </div>
 
@@ -308,12 +308,13 @@
         </div>
 
         <div class="card">
-          <div class="icon ok">✅</div>
+          <div class="icon wait">🔗</div>
           <div>
-            <h3>GitHub autonomous channel</h3>
-            <p>AI writes ams_commands.json, script executes, result read from ams_status.json</p>
+            <h3>GitHub control channel</h3>
+            <p>AI writes ams_commands.json, script executes, result in ams_status.json. It worked at build time, but the Apps Script → GitHub fetch is currently blocked, so operations run via the editor or Telegram /run instead.</p>
+            <div class="why"><strong>Status:</strong> intermittent — Apps Script can't reach api.github.com right now. Manual / Telegram control works.</div>
           </div>
-          <span class="tag done">Done</span>
+          <span class="tag pending">Limited</span>
         </div>
 
         <div class="card">
@@ -335,10 +336,28 @@
         </div>
 
         <div class="card">
+          <div class="icon ok">📋</div>
+          <div>
+            <h3>Apartments Live timeline board</h3>
+            <p>Horizontal day-by-day board (Mon 17 Aug → 31 Dec, 137 days) with per-unit 7 Dutch task rows (Check, Full clean, Bedden, Kleren, Opruimen, Check-in, Check-out) + Note + Worker. Real checkboxes only in task columns; the A/B/C layout is untouched by design.</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
+          <div class="icon ok">🔁</div>
+          <div>
+            <h3>Checkbox-driven task sync</h3>
+            <p>Toggling a board checkbox writes/updates the matching Tasks row, and the on-edit trigger auto-syncs. Fixed an O(n²) override-write hang so a full sync now completes in seconds (102 worker assignments in the last run).</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
           <div class="icon ok">🧹</div>
           <div>
-            <h3>Task generation (Property Tasks matrix)</h3>
-            <p>229 cleaning tasks created from 27 reservations; each task type fires on check-in or check-out via the Trigger column</p>
+            <h3>Task generation from board</h3>
+            <p>Tasks are now generated from the board checkboxes (per reservation/unit) instead of a fixed matrix, so the host controls exactly what gets cleaned each day.</p>
           </div>
           <span class="tag done">Done</span>
         </div>
@@ -360,9 +379,9 @@
         <div class="card">
           <div class="icon wait">⏳</div>
           <div>
-            <h3>Task assignment to workers</h3>
-            <p>Auto-assign generated tasks to Users (Assigned User column) and notify per worker</p>
-            <div class="why"><strong>Next step:</strong> populate Users and define assignment rules from the Property Tasks matrix.</div>
+            <h3>Worker assignment + notifications</h3>
+            <p>Board Worker rows already auto-assign Tasks (Assigned User) via sync. Remaining: map each worker to a Telegram chat/phone so /done and daily pushes notify the right person.</p>
+            <div class="why"><strong>Next step:</strong> collect worker → Telegram chat IDs, then enable per-worker messages.</div>
           </div>
           <span class="tag pending">Next</span>
         </div>
@@ -410,7 +429,7 @@
     </section>
 
     <footer>
-      <p><strong>Status:</strong> Operational loop live — ingest → tasks → daily schedule.</p>
+      <p><strong>Status:</strong> Operational loop live — iCal ingest → board checkboxes → task sync → daily schedule.</p>
       <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram + GitHub · August 2026</p>
     </footer>
   </div>
