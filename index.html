@@ -354,6 +354,15 @@
         </div>
 
         <div class="card">
+          <div class="icon ok">🧼</div>
+          <div>
+            <h3>Tasks de-duplicated</h3>
+            <p>The Tasks sheet was de-duplicated to one row per unit·task·date (503 → 420), and iCal task generation is now idempotent so duplicates no longer reappear on the 2-hourly sync.</p>
+          </div>
+          <span class="tag done">Done</span>
+        </div>
+
+        <div class="card">
           <div class="icon ok">🧹</div>
           <div>
             <h3>Task generation from board</h3>
@@ -374,16 +383,16 @@
     </section>
 
     <section>
-      <div class="section-title">Planned — not built yet</div>
+      <div class="section-title">Deferred &amp; planned</div>
       <div class="grid">
         <div class="card">
           <div class="icon wait">⏳</div>
           <div>
-            <h3>Worker assignment + notifications</h3>
-            <p>Board Worker rows already auto-assign Tasks (Assigned User) via sync. Remaining: map each worker to a Telegram chat/phone so /done and daily pushes notify the right person.</p>
-            <div class="why"><strong>Next step:</strong> collect worker → Telegram chat IDs, then enable per-worker messages.</div>
+            <h3>Worker notifications (per-worker DM)</h3>
+            <p>The message code is ready to DM each worker their schedule via Telegram (group fallback). Deferred: waiting on each worker's Telegram @username / chat id from the host.</p>
+            <div class="why"><strong>Deferred:</strong> no access to worker Telegram contacts right now.</div>
           </div>
-          <span class="tag pending">Next</span>
+          <span class="tag pending">Deferred</span>
         </div>
 
         <div class="card">
@@ -391,9 +400,9 @@
           <div>
             <h3>More listings</h3>
             <p>Apartment 1/2 and Moerbeke listings (iCal links still pending)</p>
-            <div class="why"><strong>Why not yet:</strong> Waiting on the iCal URLs from the host for those properties.</div>
+            <div class="why"><strong>Deferred:</strong> iCal URLs not yet available from the host.</div>
           </div>
-          <span class="tag pending">Blocked</span>
+          <span class="tag pending">Deferred</span>
         </div>
 
         <div class="card">
