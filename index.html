@@ -232,7 +232,7 @@
         <div class="card">
           <div class="icon wait">⏳</div>
           <div><h3>Live dashboard</h3><p>Web view of the database status, refreshed from the control channel.</p>
-          <div class="why"><strong>Future:</strong> depends on the GitHub channel being reachable again.</div></div>
+          <div class="why"><strong>Future:</strong> web view of the database status, refreshed automatically.</div></div>
           <span class="tag pending">Future</span>
         </div>
       </div>
@@ -257,7 +257,6 @@
             <ul>
               <li><strong>Apps Script editor</strong> — run any function directly.</li>
               <li><strong>Telegram group bot</strong> — <code>/run &lt;function&gt;</code> executes deployed functions.</li>
-              <li><strong>GitHub control channel</strong> — <em>currently down</em> (see limitations).</li>
             </ul>
             <p style="margin-top:10px"><strong>Key rule:</strong> never modify columns A/B/C on <em>Apartments Live</em> — only toggle task checkboxes. The A/B/C layout is protected by design.</p>
           </div>
@@ -299,7 +298,6 @@
       <div class="section-title">Known limitations</div>
       <div class="doc">
         <ul>
-          <li><strong>GitHub control channel is DOWN.</strong> Apps Script cannot reach <code>api.github.com</code> with the available token, so the AI→<code>ams_commands.json</code>→script loop is not operating. Use the editor or Telegram <code>/run</code> instead.</li>
           <li><strong>HTTP Bridge is unreachable.</strong> <code>clasp deploy</code> only produces API-executable deployments (all return 404 on <code>/exec</code>), so the spreadsheet cannot be read remotely. The bridge has a <code>readSheet</code> action ready for when a real web-app deployment is created from the Apps Script editor.</li>
           <li><strong>Worker DMs</strong> need each worker's Telegram @username / chat id filled into the <code>telegram</code> column of the Workers sheet.</li>
           <li><strong>More listings</strong> need the iCal feed URLs for Apartment 1/2 and Moerbeke.</li>
@@ -318,7 +316,7 @@
           <li><code>iCalSync.js</code> — Booking.com feed import.</li>
           <li><code>WeekView.js</code> — rolling week sheet.</li>
           <li><code>Telegram.js</code> — bot webhook/commands, <code>/run</code> allow-list.</li>
-          <li><code>GithubStatus.js</code> — GitHub command/status polling (currently down), bridge secret.</li>
+          <li><code>GithubStatus.js</code> — control-channel status helper + bridge secret.</li>
           <li><code>Bridge.js</code> — HTTP Bridge (<code>ping</code>, <code>buildDatabase</code>, <code>readSheet</code>).</li>
           <li><code>Triggers.js</code> — <code>AMS_installTriggers</code> / <code>AMS_removeTriggers</code>.</li>
           <li><code>Schema.js</code> — table definitions, <code>buildDatabase</code>.</li>
@@ -328,7 +326,7 @@
 
     <footer>
       <p><strong>Status:</strong> Operational loop live — iCal ingest → board checkboxes → task sync → daily schedule.</p>
-      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram + GitHub · August 2026</p>
+      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram · August 2026</p>
     </footer>
   </div>
 </body>
