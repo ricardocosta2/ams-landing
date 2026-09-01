@@ -187,6 +187,31 @@
           <div><h3>Local backups</h3><p>Timestamped snapshot of the project before every change, with restore script.</p></div>
           <span class="tag done">Done</span>
         </div>
+        <div class="card">
+          <div class="icon ok">🖥️</div>
+          <div><h3>Host dashboard &amp; management (web app)</h3><p>Apps Script web app (HTML + Chart.js) with login + password. <strong>Dashboard:</strong> KPIs, occupancy %, charts (occupancy trend, by property, task completion, worker load). <strong>Management:</strong> reservations/tasks CRUD, reassign workers, add conflict-checked manual reservations, Done/Save/Delete buttons. All writes go through validated server functions — the sheet is never edited directly.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🛎️</div>
+          <div><h3>Manual reservations (any apartment, conflict-checked)</h3><p>The host can book <strong>any</strong> unit by hand — manual bookings that overlap app/iCal reservations are <strong>blocked with a warning</strong>, clean entries merge into <code>Reservations</code> for the board &amp; Tasks.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🤖</div>
+          <div><h3>GitHub control channel</h3><p>Gives the AI a fully autonomous loop: it writes <code>ams_commands.json</code> to the repo, the script polls (1-min trigger) and runs the command, then commits <code>ams_status.json</code> back. Allow-list driven; active when <code>AMS_GH_REPO</code>/<code>AMS_GH_TOKEN</code> are set in ScriptProperties.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🚀</div>
+          <div><h3>GitHub Actions auto-deploy</h3><p>Push to <code>main</code> triggers <code>clasp push</code> automatically (requires <code>CLASPRC_JSON</code> secret in repo settings).</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🇳🇱</div>
+          <div><h3>Bot messages in Dutch</h3><p>Telegram bot messages sent in Dutch using the NL translations from Task Types / Config.</p></div>
+          <span class="tag done">Done</span>
+        </div>
       </div>
     </section>
 
@@ -213,12 +238,6 @@
         </div>
         <div class="card">
           <div class="icon wait">⏳</div>
-          <div><h3>Manual reservations (any apartment)</h3><p>The host may book <strong>any</strong> unit by hand (friends, personal use…), not just Apt 1/2 &amp; Moerbeke. Plan: a <strong>Manual Reservations</strong> sheet where the host enters unit + dates; the system <strong>verifies against app/iCal bookings</strong> and flags/blocks days already reserved by the apps, then merges clean entries into <code>Reservations</code> for the board &amp; Tasks.</p>
-          <div class="why"><strong>Planned:</strong> manual entry for any unit; if the days are already reserved by an app, the system <strong>blocks</strong> the manual booking and warns.</div></div>
-          <span class="tag pending">Planned</span>
-        </div>
-        <div class="card">
-          <div class="icon wait">⏳</div>
           <div><h3>Q&amp;A / guest co-host bot</h3><p>Answer door codes, wifi, address from a Property Info sheet.</p>
           <div class="why"><strong>Future:</strong> natural extension once internal ops are stable.</div></div>
           <span class="tag pending">Future</span>
@@ -228,13 +247,6 @@
           <div><h3>Invoices</h3><p>Generate invoices/PDFs from cleaning or rental data.</p>
           <div class="why"><strong>Later:</strong> scope still unclear (cleaning vs rental). Parked until defined.</div></div>
           <span class="tag pending">Later</span>
-        </div>
-        <div class="card">
-          <div class="icon wait">⏳</div>
-          <div><h3>Host dashboard &amp; management (web app)</h3>
-          <p>Apps Script web app (HTML + Chart.js) with login + password. <strong>Page 1 — Dashboard:</strong> occupancy %, nights booked, charts (occupancy trend, by property, task completion, worker load). <strong>Page 2 — Management:</strong> list/edit reservations &amp; tasks, reassign workers, add manual reservations (conflict-checked, merged into <code>Reservations</code>), cancel/remove. All writes go through validated server functions — the sheet is never edited directly.</p>
-          <div class="why"><strong>Ready:</strong> code pushed. Host publishes the web app once from the editor and sets the dashboard password.</div></div>
-          <span class="tag done">Built</span>
         </div>
       </div>
     </section>
@@ -311,23 +323,25 @@
       <div class="doc">
         <ul>
           <li><code>ApartmentsBoard.js</code> — board layout, override cache (batch writes), on-edit handler, <code>AMS_syncApartmentsToTasks</code>, <code>AMS_dedupeTasks</code>, <code>AMS_deleteTaskByKey</code>.</li>
-          <li><code>Tasks.js</code> — idempotent iCal/board task generation, <code>AMS_generateTasks</code>.</li>
-          <li><code>TasksOps.js</code> — <code>/today</code>, <code>/done</code>, daily push.</li>
-          <li><code>Notify.js</code> — worker directory (<code>AMS_readWorkers</code>), <code>AMS_normName</code> tolerant matcher, <code>AMS_setupWorkers</code>, DM/group send.</li>
+          <li><code>Tasks.js</code> — idempotent iCal/board task generation, <code>AMS_generateTasks</code>, <code>AMS_TASK_TRIGGER</code> map.</li>
+          <li><code>TasksOps.js</code> — <code>/today</code>, <code>/done</code>, daily push (skips Sunday), <code>AMS_completeTask</code>.</li>
+          <li><code>Notify.js</code> — worker directory (<code>AMS_readWorkers</code>), <code>AMS_normName</code> tolerant matcher, <code>AMS_setupWorkers</code>, DM/group send, <code>AMS_seedConfigTranslations</code>.</li>
           <li><code>iCalSync.js</code> — Booking.com feed import.</li>
           <li><code>WeekView.js</code> — rolling week sheet.</li>
-          <li><code>Telegram.js</code> — bot webhook/commands, <code>/run</code> allow-list.</li>
-          <li><code>GithubStatus.js</code> — control-channel status helper + bridge secret.</li>
-          <li><code>Bridge.js</code> — HTTP Bridge (<code>ping</code>, <code>buildDatabase</code>, <code>readSheet</code>).</li>
+          <li><code>Telegram.js</code> — bot webhook/commands, <code>/run</code> allow-list, JSON payload (UTF-8 fix).</li>
+          <li><code>GithubStatus.js</code> — AI GitHub control channel (<code>ams_commands.json</code> poll, <code>AMS_diagGithub</code>, <code>AMS_commitFile</code>).</li>
+          <li><code>Bridge.js</code> — HTTP Bridge (<code>ping</code>, <code>buildDatabase</code>, <code>readSheet</code>); <code>doGet</code> also serves Dashboard/Manage HTML.</li>
+          <li><code>Dashboard.js</code> — host web app backend: login + password (token), <code>AMS_web*</code> data/mutation functions, conflict-checked manual reservations.</li>
+          <li><code>DashboardUI.html</code> / <code>ManageUI.html</code> — dashboard (KPIs + Chart.js) and management UI (reservations/tasks CRUD, worker reassign, Done button).</li>
           <li><code>Triggers.js</code> — <code>AMS_installTriggers</code> / <code>AMS_removeTriggers</code>.</li>
-          <li><code>Schema.js</code> — table definitions, <code>buildDatabase</code>.</li>
+          <li><code>Schema.js</code> — table definitions, <code>buildDatabase</code>, Task Types seed with NL/PT.</li>
         </ul>
       </div>
     </section>
 
     <footer>
       <p><strong>Status:</strong> Operational loop live — iCal ingest → board checkboxes → task sync → daily schedule.</p>
-      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram · August 2026</p>
+      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram · September 2026</p>
     </footer>
   </div>
 </body>
