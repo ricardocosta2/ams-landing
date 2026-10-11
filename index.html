@@ -107,6 +107,7 @@
 <body>
   <div class="wrap">
     <header>
+      <img src="msa-stay-_-wit.png" alt="MSA Stay" style="height:48px;margin-bottom:16px" />
       <div class="badge"><span></span> Operational loop live</div>
       <h1>Accommodation Management System</h1>
       <p class="subtitle">
@@ -117,11 +118,11 @@
 
     <div class="stats">
       <div class="stat done"><strong>18</strong><span>Database tables</span></div>
-      <div class="stat done"><strong>27</strong><span>Reservations synced</span></div>
-      <div class="stat done"><strong>420</strong><span>Tasks (de-duplicated)</span></div>
+      <div class="stat done"><strong>66</strong><span>Reservations synced</span></div>
+      <div class="stat done"><strong>17</strong><span>iCal feeds (every 2h)</span></div>
+      <div class="stat done"><strong>9</strong><span>Workers registered</span></div>
       <div class="stat next"><strong>137</strong><span>Days on live board</span></div>
-      <div class="stat next"><strong>8</strong><span>Workers to register</span></div>
-      <div class="stat next"><strong>7</strong><span>Task types / unit</span></div>
+      <div class="stat next"><strong>6</strong><span>Task rows / unit</span></div>
     </div>
 
     <section>
@@ -144,7 +145,7 @@
         </div>
         <div class="card">
           <div class="icon ok">✅</div>
-          <div><h3>Booking.com iCal sync</h3><p>13 feeds imported → 27 reservations, automatic every 2 hours</p></div>
+          <div><h3>Booking.com iCal sync</h3><p>17 feeds imported → 66 reservations, automatic every 2 hours</p></div>
           <span class="tag done">Done</span>
         </div>
         <div class="card">
@@ -154,7 +155,7 @@
         </div>
         <div class="card">
           <div class="icon ok">📋</div>
-          <div><h3>Apartments Live timeline board</h3><p>Horizontal day-by-day board (Mon 17 Aug → 31 Dec, 137 days) with per-unit 7 Dutch task rows (Check, Full clean, Bedden, Kleren, Opruimen, Check-in, Check-out) + Note + Worker. Real checkboxes only in task columns; the A/B/C layout is untouched by design.</p></div>
+          <div><h3>Apartments Live timeline board</h3><p>Horizontal day-by-day board (Mon 17 Aug → 31 Dec, 137 days) with per-unit 6 Dutch task rows (Check, Full clean, Bedden, Kleren, Check-in, Check-out) + Note + Worker. Real checkboxes only in task columns; the A/B/C layout is untouched by design.</p></div>
           <span class="tag done">Done</span>
         </div>
         <div class="card">
@@ -189,17 +190,17 @@
         </div>
         <div class="card">
           <div class="icon ok">🖥️</div>
-          <div><h3>Host dashboard &amp; management (web app)</h3><p>Apps Script web app (HTML + Chart.js) with login + password. <strong>Dashboard:</strong> KPIs, occupancy %, charts (occupancy trend, by property, task completion, worker load). <strong>Management:</strong> reservations/tasks CRUD, reassign workers, add conflict-checked manual reservations, Done/Save/Delete buttons. All writes go through validated server functions — the sheet is never edited directly.</p></div>
+          <div><h3>Host dashboard &amp; management (web app)</h3><p>Apps Script web app (HTML + Chart.js) with login + password. <strong>Dashboard:</strong> KPIs (units, reservations, occupancy %, nights, avg stay), charts (occupancy trend, by property, task completion, worker load, occupancy by weekday) and a 30-day calendar. <strong>Management:</strong> reservations/tasks CRUD, worker reassign, manual conflict-checked reservations, Done/Save/Delete. All writes go through validated server functions.</p></div>
           <span class="tag done">Done</span>
         </div>
         <div class="card">
           <div class="icon ok">🛎️</div>
-          <div><h3>Manual reservations (any apartment, conflict-checked)</h3><p>The host can book <strong>any</strong> unit by hand — manual bookings that overlap app/iCal reservations are <strong>blocked with a warning</strong>, clean entries merge into <code>Reservations</code> for the board &amp; Tasks.</p></div>
+          <div><h3>Manual reservations (any unit, conflict-checked)</h3><p>The host can book any unit by hand — manual bookings that overlap app/iCal reservations are blocked with a warning; clean entries merge into <code>Reservations</code> for the board &amp; Tasks.</p></div>
           <span class="tag done">Done</span>
         </div>
         <div class="card">
           <div class="icon ok">🤖</div>
-          <div><h3>GitHub control channel</h3><p>Gives the AI a fully autonomous loop: it writes <code>ams_commands.json</code> to the repo, the script polls (1-min trigger) and runs the command, then commits <code>ams_status.json</code> back. Allow-list driven; active when <code>AMS_GH_REPO</code>/<code>AMS_GH_TOKEN</code> are set in ScriptProperties.</p></div>
+          <div><h3>GitHub control channel</h3><p>AI autonomous loop: it writes <code>ams_commands.json</code> to the repo, the script polls (1-min trigger) and runs the allow-listed command, then commits <code>ams_status.json</code> back.</p></div>
           <span class="tag done">Done</span>
         </div>
         <div class="card">
@@ -209,20 +210,52 @@
         </div>
         <div class="card">
           <div class="icon ok">🇳🇱</div>
-          <div><h3>Multilingual bot messages (NL / EN / PT)</h3><p>Per-worker messages are generated in each worker's configured language (Workers sheet <code>Language</code> column, default NL): greetings and day text translated (<em>Goede morgen / Good morning / Bom dia</em>), task labels from the NL/PT translations in Task Types.</p></div>
+          <div><h3>Multilingual bot messages (NL / EN / PT)</h3><p>Per-worker messages generated in each worker's language (Workers <code>Language</code> column, default NL): greetings and day text translated, task labels from the NL/PT translations in Task Types.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🔘</div>
+          <div><h3>Telegram button menu</h3><p>Inline keyboard for workers: 🚪 door codes (Property Info), 🛠 report issue (Issues sheet + host alert), 📅 today's agenda.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🗺️</div>
+          <div><h3>Telegram Map (auto-capture)</h3><p>Every worker message auto-records chat id / username / first name, so reports are attributed immediately and chat ids are ready to copy into <code>Workers.telegram</code> for DMs.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">👥</div>
+          <div><h3>Workers registered (9)</h3><p>Worker directory populated: Tymofii, Mónica, Yevhenii, Arek en Angelika, Hannah, Greet, Diogo, Guilherme, Ricardo.</p></div>
+          <span class="tag done">Done</span>
+        </div>
+        <div class="card">
+          <div class="icon ok">🏢</div>
+          <div><h3>Extra listings seeded (L014–L017)</h3><p>Apartment 1/2 and Moerbeke created; waiting only on their Booking.com iCal URLs to start syncing.</p></div>
           <span class="tag done">Done</span>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="section-title">In progress / blocked</div>
+      <div class="section-title">Needs host data</div>
       <div class="grid">
         <div class="card">
-          <div class="icon block">⛔</div>
-          <div><h3>Verify Workers sheet</h3><p>The Worker directory can't be inspected remotely right now (see Known limitations). The sheet needs to exist with the 8 workers registered.</p>
-          <div class="why issue"><strong>Blocked:</strong> run <code>AMS_setupWorkers()</code> in the editor, then paste the Workers rows here (or report the returned <code>added</code> count) so it can be confirmed.</div></div>
-          <span class="tag block">Blocked</span>
+          <div class="icon wait">🚪</div>
+          <div><h3>Door codes / WiFi</h3><p><code>Property Info</code> exists with 17 units, but the door-code and WiFi columns are empty (only U001 has test data). Until filled, the bot's door-code button replies "no code stored".</p>
+          <div class="why"><strong>Action:</strong> fill <code>Door Code</code> / WiFi columns in <code>Property Info</code>, one row per unit.</div></div>
+          <span class="tag pending">Host data</span>
+        </div>
+        <div class="card">
+          <div class="icon wait">🔔</div>
+          <div><h3>Worker Telegram chat ids</h3><p>The <code>Workers.telegram</code> column is empty, so per-worker <strong>DMs are off</strong> (the group still receives the daily schedule). Chat ids are auto-captured in <code>Telegram Map</code> whenever a worker messages the bot.</p>
+          <div class="why"><strong>Action:</strong> copy each <code>Chat ID</code> from <code>Telegram Map</code> into the matching <code>Workers.telegram</code> cell.</div></div>
+          <span class="tag pending">Host data</span>
+        </div>
+        <div class="card">
+          <div class="icon wait">🔗</div>
+          <div><h3>iCal URLs for L014–L017</h3><p>Apartment 1/2 and Moerbeke listings exist but aren't syncing yet.</p>
+          <div class="why"><strong>Action:</strong> add their Booking.com iCal feed URLs to the <code>iCal Feeds</code> sheet.</div></div>
+          <span class="tag pending">Host data</span>
         </div>
       </div>
     </section>
@@ -232,14 +265,8 @@
       <div class="grid">
         <div class="card">
           <div class="icon wait">⏳</div>
-          <div><h3>Worker notifications (per-worker DM)</h3><p>Message code is ready to DM each worker their schedule via Telegram (group fallback).</p>
-          <div class="why"><strong>Deferred:</strong> waiting on each worker's Telegram @username / chat id from the host.</div></div>
-          <span class="tag pending">Deferred</span>
-        </div>
-        <div class="card">
-          <div class="icon wait">⏳</div>
-          <div><h3>Q&amp;A / guest co-host bot</h3><p>Answer door codes, wifi, address from a Property Info sheet.</p>
-          <div class="why"><strong>Future:</strong> natural extension once internal ops are stable.</div></div>
+          <div><h3>Q&amp;A / guest co-host bot</h3><p>Answer door codes, wifi, address from the <code>Property Info</code> sheet.</p>
+          <div class="why"><strong>Future:</strong> natural extension once the door-code data is filled.</div></div>
           <span class="tag pending">Future</span>
         </div>
         <div class="card">
@@ -269,7 +296,9 @@
             <h3>Control surfaces</h3>
             <ul>
               <li><strong>Apps Script editor</strong> — run any function directly.</li>
-              <li><strong>Telegram group bot</strong> — <code>/run &lt;function&gt;</code> executes deployed functions.</li>
+              <li><strong>Telegram bot</strong> — worker button menu + <code>/run &lt;function&gt;</code>.</li>
+              <li><strong>Host web app</strong> — dashboard + management (login with password).</li>
+              <li><strong>GitHub channel</strong> — <code>ams_commands.json</code> → poll → run → <code>ams_status.json</code>.</li>
             </ul>
             <p style="margin-top:10px"><strong>Key rule:</strong> never modify columns A/B/C on <em>Apartments Live</em> — only toggle task checkboxes. The A/B/C layout is protected by design.</p>
           </div>
@@ -284,10 +313,11 @@
           <div>
             <h3>Run in the editor</h3>
             <ul>
-              <li><code>AMS_setupWorkers()</code> — register the 8 workers (run once).</li>
+              <li><code>AMS_setupWorkers()</code> — register workers (idempotent; run after adding a worker).</li>
               <li><code>AMS_iCalSync()</code> — pull Booking.com reservations now.</li>
               <li><code>AMS_syncApartmentsToTasks()</code> — rebuild Tasks from the board.</li>
               <li><code>AMS_dedupeTasks()</code> — collapse duplicate Tasks rows.</li>
+              <li><code>AMS_clearOverdueTasks()</code> — prune pending tasks dated in the past.</li>
               <li><code>AMS_buildWeekView()</code> — rebuild the week sheet.</li>
               <li><code>AMS_installTriggers()</code> — (re)install on-edit + time triggers.</li>
             </ul>
@@ -323,25 +353,23 @@
       <div class="doc">
         <ul>
           <li><code>ApartmentsBoard.js</code> — board layout, override cache (batch writes), on-edit handler, <code>AMS_syncApartmentsToTasks</code>, <code>AMS_dedupeTasks</code>, <code>AMS_deleteTaskByKey</code>.</li>
-          <li><code>Tasks.js</code> — idempotent iCal/board task generation, <code>AMS_generateTasks</code>, <code>AMS_TASK_TRIGGER</code> map.</li>
-          <li><code>TasksOps.js</code> — <code>/today</code>, <code>/done</code>, daily push (skips Sunday), <code>AMS_completeTask</code>.</li>
-          <li><code>Notify.js</code> — worker directory (<code>AMS_readWorkers</code>), <code>AMS_normName</code> tolerant matcher, <code>AMS_setupWorkers</code>, DM/group send, <code>AMS_seedConfigTranslations</code>.</li>
+          <li><code>Tasks.js</code> — idempotent iCal/board task generation, <code>AMS_generateTasks</code>.</li>
+          <li><code>TasksOps.js</code> — <code>/today</code>, <code>/done</code>, daily push.</li>
+          <li><code>Notify.js</code> — worker directory (<code>AMS_readWorkers</code>), <code>AMS_normName</code> tolerant matcher, <code>AMS_setupWorkers</code>, DM/group send.</li>
           <li><code>iCalSync.js</code> — Booking.com feed import.</li>
           <li><code>WeekView.js</code> — rolling week sheet.</li>
-          <li><code>Telegram.js</code> — bot webhook/commands, <code>/run</code> allow-list, JSON payload (UTF-8 fix).</li>
-          <li><code>GithubStatus.js</code> — AI GitHub control channel (<code>ams_commands.json</code> poll, <code>AMS_diagGithub</code>, <code>AMS_commitFile</code>).</li>
-          <li><code>Bridge.js</code> — HTTP Bridge (<code>ping</code>, <code>buildDatabase</code>, <code>readSheet</code>); <code>doGet</code> also serves Dashboard/Manage HTML.</li>
-          <li><code>Dashboard.js</code> — host web app backend: login + password (token), <code>AMS_web*</code> data/mutation functions, conflict-checked manual reservations.</li>
-          <li><code>DashboardUI.html</code> / <code>ManageUI.html</code> — dashboard (KPIs + Chart.js) and management UI (reservations/tasks CRUD, worker reassign, Done button).</li>
+          <li><code>Telegram.js</code> — bot webhook/commands, <code>/run</code> allow-list.</li>
+          <li><code>GithubStatus.js</code> — control-channel status helper + bridge secret.</li>
+          <li><code>Bridge.js</code> — HTTP Bridge (<code>ping</code>, <code>buildDatabase</code>, <code>readSheet</code>).</li>
           <li><code>Triggers.js</code> — <code>AMS_installTriggers</code> / <code>AMS_removeTriggers</code>.</li>
-          <li><code>Schema.js</code> — table definitions, <code>buildDatabase</code>, Task Types seed with NL/PT.</li>
+          <li><code>Schema.js</code> — table definitions, <code>buildDatabase</code>.</li>
         </ul>
       </div>
     </section>
 
     <footer>
       <p><strong>Status:</strong> Operational loop live — iCal ingest → board checkboxes → task sync → daily schedule.</p>
-      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram · September 2026</p>
+      <p style="margin-top:6px">Built with Google Sheets + Apps Script + Telegram · October 2026</p>
     </footer>
   </div>
 </body>
